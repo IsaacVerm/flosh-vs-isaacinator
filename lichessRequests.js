@@ -1,17 +1,16 @@
+// get games fgoeti vs isaacinator
 var xhr = new XMLHttpRequest();
 xhr.open('GET', 'https://lichess.org/api/games/user/fgoeti?vs=Isaacinator', false);
-// xhr.setRequestHeader('Accept', 'application/x-ndjson');
 xhr.send();
 
+// parse results and white players
 let games = xhr.responseText;
 let white_players_regex = /\[White "\w+"\]/g;
 let white_players = games.match(white_players_regex);
 let results_regex = /\[Result ".*"]/g;
 let results = games.match(results_regex);
 
-console.log(white_players);
-console.log(results);
-
+// calculate scores
 let fgoeti_score = 0;
 
 for (var i = 0; i < results.length; i++) {
@@ -31,14 +30,7 @@ for (var i = 0; i < results.length; i++) {
 
 let isaacinator_score = results.length - fgoeti_score;
 
-// white_players.forEach((player, i) => {
-//   result = results[i];
-
-//   if (player === '[White "fgoeti"]' && result === '[Result "1-0"]') {
-//     fgoeti_score = fgoeti_score + 1;
-//   }
-// });
-
+// change html popup
 let user = document.getElementById('rivalry_score');
 user.textContent =
   'Op dit moment heeft Flosh ' +
